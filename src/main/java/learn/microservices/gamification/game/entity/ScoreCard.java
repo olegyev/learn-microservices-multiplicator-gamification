@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document("scores")
+@Document("score_cards")
 public class ScoreCard {
 
     // The default score assigned to this card, if not specified.
