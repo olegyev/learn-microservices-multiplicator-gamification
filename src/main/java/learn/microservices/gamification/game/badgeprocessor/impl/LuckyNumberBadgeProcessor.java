@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class LuckyNumberBadgeProcessor implements BadgeProcessor {
 
-    private final static int LUCKY_FACTOR = 42;
+    public final static int LUCKY_FACTOR = 42;
 
     @Override
     public Optional<BadgeType> processForOptionalBadge(final int currentScore, final List<ScoreCard> scoreCards, final ChallengeSolvedDto solved) {

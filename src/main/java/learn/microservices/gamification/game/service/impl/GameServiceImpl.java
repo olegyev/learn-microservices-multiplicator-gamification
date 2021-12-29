@@ -21,13 +21,15 @@ import java.util.stream.Collectors;
 public class GameServiceImpl implements GameService {
 
     private final ScoreRepository scoreRepository;
+
     private final BadgeRepository badgeRepository;
-    // Spring injects all the @Compnent beans in this list.
+
+    // Spring injects all the @Component beans in this list.
     private final List<BadgeProcessor> badgeProcessors;
 
     @Override
     public GameResult newAttemptForUser(final ChallengeSolvedDto challenge) {
-        // Points are given only for the correct attempts.
+        // Scores are given only for the correct attempts.
         if (challenge.isCorrect()) {
             ScoreCard scoreCard = new ScoreCard(challenge.getUserId(), challenge.getAttemptId());
             scoreRepository.save(scoreCard);
@@ -58,7 +60,7 @@ public class GameServiceImpl implements GameService {
         }
         int totalScore = optTotalScore.get();
 
-        // Gets all the scorecards and existing badges for a user.
+        // Gets all the scorecards and existing badges for the user.
         List<ScoreCard> scoreCards = scoreRepository.findByUserIdOrderByTimestampDesc(userId);
         Set<BadgeType> alreadyAwardedBadges = badgeRepository.findByUserIdOrderByTimestampDesc(userId).stream()
                 .map(BadgeCard::getType)
