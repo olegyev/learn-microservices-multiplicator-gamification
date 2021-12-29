@@ -21,11 +21,11 @@ class GameServiceImplTest {
     public void whenNewAttemptForUserIsCorrect_thenScoreIsEqualsToTen() {
         // given
         ChallengeSolvedDto dto = new ChallengeSolvedDto(
-                1L,
+                "1",
                 true,
                 50,
                 60,
-                1L,
+                "1",
                 "john_doe");
         // when
         GameService.GameResult result = gameService.newAttemptForUser(dto);

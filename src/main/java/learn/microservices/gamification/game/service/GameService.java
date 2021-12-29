@@ -12,7 +12,7 @@ public interface GameService {
      * Process a new attempt from a given user.
      *
      * @param challenge the challenge data with the user details, factors, etc.
-     * @return a {@link GameResult} object containing the new score and badge cards obtained.
+     * @return a {@link GameResult} object containing the new score and badge cards obtained
      */
     GameResult newAttemptForUser(ChallengeSolvedDto challenge);
 

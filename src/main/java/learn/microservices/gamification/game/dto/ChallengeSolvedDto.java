@@ -5,11 +5,11 @@ import lombok.Value;
 @Value
 public class ChallengeSolvedDto {
 
-    long attemptId;
+    String attemptId;
     boolean correct;
     int factorA;
     int factorB;
-    long userId;
+    String userId;
     String userAlias;
 
 }
