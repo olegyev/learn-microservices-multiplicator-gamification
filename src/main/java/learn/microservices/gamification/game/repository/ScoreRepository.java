@@ -1,5 +1,6 @@
 package learn.microservices.gamification.game.repository;
 
+import learn.microservices.gamification.game.entity.LeaderBoardRow;
 import learn.microservices.gamification.game.entity.ScoreCard;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -11,5 +12,7 @@ public interface ScoreRepository extends MongoRepository<ScoreCard, String> {
     Optional<Integer> getTotalScoreForUser(String userId);
 
     List<ScoreCard> findByUserIdOrderByTimestampDesc(String userId);
+
+    List<LeaderBoardRow> findFirst10();
 
 }
