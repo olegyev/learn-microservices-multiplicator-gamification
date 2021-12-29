@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +19,17 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
 
     @Override
     public List<LeaderBoardRow> getCurrentLeaderBoard() {
-        return null;
+        // Get scores only first.
+        List<LeaderBoardRow> onlyScores = scoreRepository.findFirst10();
+
+        // Merge with badges.
+        return onlyScores.stream().map(row -> {
+            List<String> badges =
+                    badgeRepository.findByUserIdOrderByTimestampDesc(row.getUserId()).stream()
+                            .map(b -> b.getType().getDescription())
+                            .collect(Collectors.toList());
+            return row.withBadges(badges);
+        }).collect(Collectors.toList());
     }
 
 }

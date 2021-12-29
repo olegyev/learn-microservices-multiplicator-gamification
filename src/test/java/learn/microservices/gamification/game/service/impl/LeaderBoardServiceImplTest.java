@@ -8,7 +8,9 @@ import learn.microservices.gamification.game.repository.ScoreRepository;
 import learn.microservices.gamification.game.service.LeaderBoardService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
 
+@ExtendWith(MockitoExtension.class)
 class LeaderBoardServiceImplTest {
 
     private LeaderBoardService leaderBoardService;
@@ -82,8 +85,7 @@ class LeaderBoardServiceImplTest {
                         idForUser1,
                         totalScoresForUser1,
                         badgesForUser1.stream()
-                                .map(BadgeCard::getType)
-                                .map(BadgeType::getDescription)
+                                .map(b -> b.getType().getDescription())
                                 .collect(Collectors.toList())
                 )
         );
@@ -93,8 +95,7 @@ class LeaderBoardServiceImplTest {
                         idForUser2,
                         totalScoresForUser2,
                         badgesForUser2.stream()
-                                .map(BadgeCard::getType)
-                                .map(BadgeType::getDescription)
+                                .map(b -> b.getType().getDescription())
                                 .collect(Collectors.toList())
                 )
         );
@@ -104,8 +105,7 @@ class LeaderBoardServiceImplTest {
                         idForUser3,
                         totalScoresForUser3,
                         badgesForUser3.stream()
-                                .map(BadgeCard::getType)
-                                .map(BadgeType::getDescription)
+                                .map(b -> b.getType().getDescription())
                                 .collect(Collectors.toList())
                 )
         );
