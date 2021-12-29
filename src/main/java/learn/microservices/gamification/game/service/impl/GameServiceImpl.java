@@ -5,6 +5,8 @@ import learn.microservices.gamification.game.dto.ChallengeSolvedDto;
 import learn.microservices.gamification.game.entity.BadgeCard;
 import learn.microservices.gamification.game.entity.ScoreCard;
 import learn.microservices.gamification.game.enumeration.BadgeType;
+import learn.microservices.gamification.game.repository.BadgeRepository;
+import learn.microservices.gamification.game.repository.ScoreRepository;
 import learn.microservices.gamification.game.service.GameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
