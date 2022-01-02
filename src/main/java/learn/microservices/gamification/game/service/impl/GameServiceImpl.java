@@ -8,7 +8,9 @@ import learn.microservices.gamification.game.enumeration.BadgeType;
 import learn.microservices.gamification.game.repository.BadgeRepository;
 import learn.microservices.gamification.game.repository.ScoreRepository;
 import learn.microservices.gamification.game.service.GameService;
+import learn.microservices.gamification.game.repository.ScoreRepository.UserTotalScore;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,7 +56,8 @@ public class GameServiceImpl implements GameService {
         String userId = solvedChallenge.getUserId();
 
         // Gets total score for a user.
-        Optional<Integer> optTotalScore = scoreRepository.getTotalScoreForUser(userId);
+        // Returns empty list if user doesn't exist.
+        Optional<Integer> optTotalScore = sumTotalScoreForUser(userId);
         if (optTotalScore.isEmpty()) {
             return List.of();
         }
@@ -77,6 +80,15 @@ public class GameServiceImpl implements GameService {
         badgeRepository.saveAll(newBadgeCards);
 
         return newBadgeCards;
+    }
+
+    /**
+     * @return total score for a given user, or empty {@code Optional} if user doesn't exist
+     */
+    private Optional<Integer> sumTotalScoreForUser(final String userId) {
+        AggregationResults<UserTotalScore> aggregationResult = scoreRepository.sumTotalScoreForUser(userId);
+        return Optional.ofNullable(aggregationResult.getUniqueMappedResult())
+                .map(UserTotalScore::getTotalScore);
     }
 
 }
