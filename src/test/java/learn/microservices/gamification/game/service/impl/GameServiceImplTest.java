@@ -8,13 +8,16 @@ import learn.microservices.gamification.game.entity.ScoreCard;
 import learn.microservices.gamification.game.enumeration.BadgeType;
 import learn.microservices.gamification.game.repository.BadgeRepository;
 import learn.microservices.gamification.game.repository.ScoreRepository;
+import learn.microservices.gamification.game.repository.ScoreRepository.UserTotalScore;
 import learn.microservices.gamification.game.service.GameService;
 import learn.microservices.gamification.game.service.GameService.GameResult;
+import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +62,7 @@ class GameServiceImplTest {
                 userId,
                 "john_doe");
 
-        given(scoreRepository.getTotalScoreForUser(userId)).willReturn(Optional.of(currentScore));
+        given(scoreRepository.sumTotalScoreForUser(userId)).willReturn(new AggregationResults<>(List.of(new UserTotalScore(currentScore)), new Document()));
         given(scoreRepository.findByUserIdOrderByTimestampDesc(userId)).willReturn(List.of(scoreCard));
         given(badgeRepository.findByUserIdOrderByTimestampDesc(userId)).willReturn(List.of(badgeCard));
         given(badgeProcessor.badgeType()).willReturn(BadgeType.LUCKY_NUMBER);

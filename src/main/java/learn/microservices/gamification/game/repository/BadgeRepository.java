@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface BadgeRepository extends MongoRepository<BadgeCard, String> {
 
+    /**
+     * @return the list of BadgeCards for a user, ordered by most recent first
+     */
     List<BadgeCard> findByUserIdOrderByTimestampDesc(String userId);
 
 }
