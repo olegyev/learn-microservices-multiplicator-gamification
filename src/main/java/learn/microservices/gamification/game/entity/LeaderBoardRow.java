@@ -1,26 +1,28 @@
 package learn.microservices.gamification.game.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Value;
-import lombok.With;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
-@Value
+@Getter
+@ToString
+@EqualsAndHashCode
+@NoArgsConstructor // is needed for MongoDB mapping (see ScoreRepository#findFirst10 query)
 @AllArgsConstructor
-public class LeaderBoardRow {
+public final class LeaderBoardRow {
 
-    String userId;
+    @Field("_id")
+    private String userId;
 
-    Long totalScore;
+    private Long totalScore;
 
     @With
-    List<String> badges;
+    private List<String> badges = List.of();
 
     public LeaderBoardRow(String userId, Long totalScore) {
         this.userId = userId;
         this.totalScore = totalScore;
-        this.badges = List.of();
     }
 
 }

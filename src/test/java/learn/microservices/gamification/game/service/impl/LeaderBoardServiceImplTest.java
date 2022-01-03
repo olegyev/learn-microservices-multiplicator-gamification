@@ -6,11 +6,13 @@ import learn.microservices.gamification.game.enumeration.BadgeType;
 import learn.microservices.gamification.game.repository.BadgeRepository;
 import learn.microservices.gamification.game.repository.ScoreRepository;
 import learn.microservices.gamification.game.service.LeaderBoardService;
+import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,7 +71,7 @@ class LeaderBoardServiceImplTest {
                 new LeaderBoardRow(idForUser3, totalScoresForUser3)
         );
 
-        given(scoreRepository.findFirst10()).willReturn(onlyScores);
+        given(scoreRepository.findFirst10()).willReturn(new AggregationResults<>(onlyScores, new Document()));
         given(badgeRepository.findByUserIdOrderByTimestampDesc(idForUser1)).willReturn(badgesForUser1);
         given(badgeRepository.findByUserIdOrderByTimestampDesc(idForUser2)).willReturn(badgesForUser2);
         given(badgeRepository.findByUserIdOrderByTimestampDesc(idForUser3)).willReturn(badgesForUser3);

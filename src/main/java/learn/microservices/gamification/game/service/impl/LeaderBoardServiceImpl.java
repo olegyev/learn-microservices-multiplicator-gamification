@@ -20,7 +20,7 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
     @Override
     public List<LeaderBoardRow> getCurrentLeaderBoard() {
         // Get scores only first.
-        List<LeaderBoardRow> onlyScores = scoreRepository.findFirst10();
+        List<LeaderBoardRow> onlyScores = getLeaderBoard();
 
         // Merge with badges.
         return onlyScores.stream().map(row -> {
@@ -30,6 +30,10 @@ public class LeaderBoardServiceImpl implements LeaderBoardService {
                             .collect(Collectors.toList());
             return row.withBadges(badges);
         }).collect(Collectors.toList());
+    }
+
+    private List<LeaderBoardRow> getLeaderBoard() {
+        return scoreRepository.findFirst10().getMappedResults();
     }
 
 }
