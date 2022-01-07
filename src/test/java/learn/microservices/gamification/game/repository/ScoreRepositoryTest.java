@@ -127,8 +127,20 @@ class ScoreRepositoryTest {
         then(scoreCards).isEmpty();
     }
 
+    @Test
+    void whenFindByUserIdOrderByTimestampDescForNull_thenReturnEmptyList() {
+        // given
+        String userId = null;
+
+        // when
+        List<ScoreCard> scoreCards = scoreRepository.findByUserIdOrderByTimestampDesc(userId);
+
+        // then
+        then(scoreCards).isEmpty();
+    }
+
     @AfterEach
-    public void deleteObject() {
+    public void tearDown() {
         scoreRepository.deleteAll(user1ScoreCards);
         scoreRepository.deleteAll(user2ScoreCards);
     }
