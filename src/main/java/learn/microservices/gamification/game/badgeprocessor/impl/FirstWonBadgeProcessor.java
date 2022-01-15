@@ -14,7 +14,7 @@ public class FirstWonBadgeProcessor implements BadgeProcessor {
 
     @Override
     public Optional<BadgeType> processForOptionalBadge(final int currentScore, final List<ScoreCard> scoreCards, final ChallengeSolvedDto solved) {
-        return scoreCards.size() == 1 ? Optional.of(BadgeType.FIRST_WON) : Optional.empty();
+        return (scoreCards != null && scoreCards.size() == 1) ? Optional.of(BadgeType.FIRST_WON) : Optional.empty();
     }
 
     @Override
