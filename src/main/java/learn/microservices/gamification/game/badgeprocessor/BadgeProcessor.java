@@ -1,6 +1,6 @@
 package learn.microservices.gamification.game.badgeprocessor;
 
-import learn.microservices.gamification.game.dto.ChallengeSolvedDto;
+import learn.microservices.gamification.game.dto.ChallengeSolvedEvent;
 import learn.microservices.gamification.game.entity.ScoreCard;
 import learn.microservices.gamification.game.enumeration.BadgeType;
 
@@ -14,7 +14,7 @@ public interface BadgeProcessor {
      *
      * @return a BadgeType if the user is entitled to a badge, otherwise empty
      */
-    Optional<BadgeType> processForOptionalBadge(int currentScore, List<ScoreCard> scoreCards, ChallengeSolvedDto solved);
+    Optional<BadgeType> processForOptionalBadge(int currentScore, List<ScoreCard> scoreCards, ChallengeSolvedEvent solved);
 
     /**
      * @return the BadgeType object that this processor is handling.

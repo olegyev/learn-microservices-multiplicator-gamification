@@ -1,6 +1,6 @@
 package learn.microservices.gamification.game.badgeprocessor.impl;
 
-import learn.microservices.gamification.game.dto.ChallengeSolvedDto;
+import learn.microservices.gamification.game.dto.ChallengeSolvedEvent;
 import learn.microservices.gamification.game.enumeration.BadgeType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ class LuckyNumberBadgeProcessorTest {
     void whenSolvedChallengeOneOfFactorsIsEqualTo42_thenReturnLuckyNumberBadge() {
         // given
         int luckyNumber = LuckyNumberBadgeProcessor.LUCKY_FACTOR;
-        ChallengeSolvedDto luckyDto = new ChallengeSolvedDto("1", true, luckyNumber, 20, "1", "john_doe");
+        ChallengeSolvedEvent luckyDto = new ChallengeSolvedEvent("1", true, luckyNumber, 20, "1", "john_doe");
 
         // when
         Optional<BadgeType> returnedBadge = luckyNumberBadgeProcessor.processForOptionalBadge(10, List.of(), luckyDto);
@@ -36,7 +36,7 @@ class LuckyNumberBadgeProcessorTest {
     @Test
     void whenSolvedChallengeBothFactorsAreNotEqualTo42_thenReturnEmptyResult() {
         // given
-        ChallengeSolvedDto unluckyDto = new ChallengeSolvedDto("1", true, 10, 20, "1", "john_doe");
+        ChallengeSolvedEvent unluckyDto = new ChallengeSolvedEvent("1", true, 10, 20, "1", "john_doe");
 
         // when
         Optional<BadgeType> returnedBadge = luckyNumberBadgeProcessor.processForOptionalBadge(20, List.of(), unluckyDto);
@@ -48,7 +48,7 @@ class LuckyNumberBadgeProcessorTest {
     @Test
     void whenSolvedChallengeIsNull_thenReturnEmptyResult() {
         // given
-        ChallengeSolvedDto nullDto = null;
+        ChallengeSolvedEvent nullDto = null;
 
         // when
         Optional<BadgeType> returnedBadge = luckyNumberBadgeProcessor.processForOptionalBadge(20, List.of(), nullDto);

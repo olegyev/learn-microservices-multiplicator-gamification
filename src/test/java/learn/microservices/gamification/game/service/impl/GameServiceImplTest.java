@@ -2,7 +2,7 @@ package learn.microservices.gamification.game.service.impl;
 
 import learn.microservices.gamification.game.badgeprocessor.BadgeProcessor;
 import learn.microservices.gamification.game.badgeprocessor.impl.LuckyNumberBadgeProcessor;
-import learn.microservices.gamification.game.dto.ChallengeSolvedDto;
+import learn.microservices.gamification.game.dto.ChallengeSolvedEvent;
 import learn.microservices.gamification.game.entity.BadgeCard;
 import learn.microservices.gamification.game.entity.ScoreCard;
 import learn.microservices.gamification.game.enumeration.BadgeType;
@@ -54,7 +54,7 @@ class GameServiceImplTest {
         int currentScore = ScoreCard.DEFAULT_SCORE;
         ScoreCard scoreCard = new ScoreCard(userId, attemptId);
         BadgeCard badgeCard = new BadgeCard(userId, BadgeType.FIRST_WON);
-        ChallengeSolvedDto dto = new ChallengeSolvedDto(
+        ChallengeSolvedEvent dto = new ChallengeSolvedEvent(
                 attemptId,
                 true,
                 luckyNumber,
@@ -80,7 +80,7 @@ class GameServiceImplTest {
     @Test
     public void whenNewAttemptForUserIsWrong_thenScoreIsEqualToZeroAndNoBadgesInGameResult() {
         // given
-        ChallengeSolvedDto dto = new ChallengeSolvedDto("1", false, 50, 60, "1", "john_doe");
+        ChallengeSolvedEvent dto = new ChallengeSolvedEvent("1", false, 50, 60, "1", "john_doe");
         // when
         GameService.GameResult result = gameService.newAttemptForUser(dto);
         // then

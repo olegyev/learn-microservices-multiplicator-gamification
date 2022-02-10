@@ -1,7 +1,7 @@
 package learn.microservices.gamification.game.badgeprocessor.impl;
 
 import learn.microservices.gamification.game.badgeprocessor.BadgeProcessor;
-import learn.microservices.gamification.game.dto.ChallengeSolvedDto;
+import learn.microservices.gamification.game.dto.ChallengeSolvedEvent;
 import learn.microservices.gamification.game.entity.ScoreCard;
 import learn.microservices.gamification.game.enumeration.BadgeType;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import java.util.Optional;
 class BronzeBadgeProcessor implements BadgeProcessor {
 
     @Override
-    public Optional<BadgeType> processForOptionalBadge(final int currentScore, final List<ScoreCard> scoreCards, final ChallengeSolvedDto solved) {
+    public Optional<BadgeType> processForOptionalBadge(final int currentScore, final List<ScoreCard> scoreCards, final ChallengeSolvedEvent solved) {
         return currentScore > 50 ? Optional.of(BadgeType.BRONZE) : Optional.empty();
     }
 

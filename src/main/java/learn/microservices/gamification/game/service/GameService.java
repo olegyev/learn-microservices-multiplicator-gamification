@@ -1,6 +1,6 @@
 package learn.microservices.gamification.game.service;
 
-import learn.microservices.gamification.game.dto.ChallengeSolvedDto;
+import learn.microservices.gamification.game.dto.ChallengeSolvedEvent;
 import learn.microservices.gamification.game.enumeration.BadgeType;
 import lombok.Value;
 
@@ -14,7 +14,7 @@ public interface GameService {
      * @param challenge the challenge data with the user details, factors, etc.
      * @return a {@link GameResult} object containing the new score and badge cards obtained
      */
-    GameResult newAttemptForUser(ChallengeSolvedDto challenge);
+    GameResult newAttemptForUser(ChallengeSolvedEvent challenge);
 
     @Value
     class GameResult {

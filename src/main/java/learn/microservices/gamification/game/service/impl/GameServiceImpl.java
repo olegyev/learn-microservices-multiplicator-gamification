@@ -1,14 +1,14 @@
 package learn.microservices.gamification.game.service.impl;
 
 import learn.microservices.gamification.game.badgeprocessor.BadgeProcessor;
-import learn.microservices.gamification.game.dto.ChallengeSolvedDto;
+import learn.microservices.gamification.game.dto.ChallengeSolvedEvent;
 import learn.microservices.gamification.game.entity.BadgeCard;
 import learn.microservices.gamification.game.entity.ScoreCard;
 import learn.microservices.gamification.game.enumeration.BadgeType;
 import learn.microservices.gamification.game.repository.BadgeRepository;
 import learn.microservices.gamification.game.repository.ScoreRepository;
-import learn.microservices.gamification.game.service.GameService;
 import learn.microservices.gamification.game.repository.ScoreRepository.UserTotalScore;
+import learn.microservices.gamification.game.service.GameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class GameServiceImpl implements GameService {
     private final List<BadgeProcessor> badgeProcessors;
 
     @Override
-    public GameResult newAttemptForUser(final ChallengeSolvedDto challenge) {
+    public GameResult newAttemptForUser(final ChallengeSolvedEvent challenge) {
         // Scores are given only for the correct attempts.
         if (challenge.isCorrect()) {
             ScoreCard scoreCard = new ScoreCard(challenge.getUserId(), challenge.getAttemptId());
@@ -52,7 +52,7 @@ public class GameServiceImpl implements GameService {
      * @param solvedChallenge solved challenge
      * @return list of awarded badges
      */
-    private List<BadgeCard> processForBadges(final ChallengeSolvedDto solvedChallenge) {
+    private List<BadgeCard> processForBadges(final ChallengeSolvedEvent solvedChallenge) {
         String userId = solvedChallenge.getUserId();
 
         // Gets total score for a user.
