@@ -19,7 +19,7 @@ public class AmqpConfiguration {
 
     // configure exchange (to create if not done yet by the publisher)
     @Bean
-    public TopicExchange challengesTopicExchange(@Value("{amqp.exchange.attempts}") final String exchangeName) {
+    public TopicExchange challengesTopicExchange(@Value("${amqp.exchange.attempts}") final String exchangeName) {
         return ExchangeBuilder
                 .topicExchange(exchangeName)
                 .durable(true)
@@ -28,7 +28,7 @@ public class AmqpConfiguration {
 
     // configure queue
     @Bean
-    public Queue gamificationQueue(@Value("{amqp.queue.gamification}") final String queueName) {
+    public Queue gamificationQueue(@Value("${amqp.queue.gamification}") final String queueName) {
         return QueueBuilder
                 .durable(queueName)
                 .build();
