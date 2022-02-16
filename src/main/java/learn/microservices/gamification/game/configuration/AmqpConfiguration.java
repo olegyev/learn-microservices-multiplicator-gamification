@@ -11,6 +11,8 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 import org.springframework.messaging.handler.annotation.support.MessageHandlerMethodFactory;
 
+import java.time.Duration;
+
 /**
  * Configures RabbitMQ via AMQP abstraction.
  */
@@ -30,7 +32,12 @@ public class AmqpConfiguration {
     @Bean
     public Queue gamificationQueue(@Value("${amqp.queue.gamification}") final String queueName) {
         return QueueBuilder
+                // don't remove queue on broker shutdown
                 .durable(queueName)
+                // remove messages from a queue after 15 minutes
+                .ttl((int) Duration.ofMinutes(15).toMillis())
+                // maximum 5 messages in a queue at one time
+                .maxLength(5)
                 .build();
     }
 
