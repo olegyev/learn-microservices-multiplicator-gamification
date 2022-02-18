@@ -76,7 +76,7 @@ class ScoreRepositoryTest {
     @Test
     void whenFindFirst10_thenReturnCorrectLeaderBoard() {
         // given
-        // user1ScoreCards and user2ScoreCards stored in DB
+        // Objects user1ScoreCards and user2ScoreCards stored in DB.
 
         // when
         AggregationResults<LeaderBoardRow> aggregationResults = scoreRepository.findFirst10();
