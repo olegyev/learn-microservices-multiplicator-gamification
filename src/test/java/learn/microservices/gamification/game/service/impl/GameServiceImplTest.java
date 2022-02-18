@@ -81,8 +81,10 @@ class GameServiceImplTest {
     public void whenNewAttemptForUserIsWrong_thenScoreIsEqualToZeroAndNoBadgesInGameResult() {
         // given
         ChallengeSolvedEvent dto = new ChallengeSolvedEvent("1", false, 50, 60, "1", "john_doe");
+
         // when
         GameService.GameResult result = gameService.newAttemptForUser(dto);
+
         // then
         then(result).isEqualTo(new GameResult(0, List.of()));
     }

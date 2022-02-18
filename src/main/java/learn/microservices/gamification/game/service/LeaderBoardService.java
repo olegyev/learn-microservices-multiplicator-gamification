@@ -7,7 +7,7 @@ import java.util.List;
 public interface LeaderBoardService {
 
     /**
-     * @return the current leader board ranked in descending order
+     * @return the current leader board ranked in descending order.
      */
     List<LeaderBoardRow> getCurrentLeaderBoard();
 

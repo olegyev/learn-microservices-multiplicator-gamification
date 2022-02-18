@@ -12,6 +12,7 @@ import learn.microservices.gamification.game.service.GameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional // both scorecards and badges are stored or none of them if something goes wrong
 public class GameServiceImpl implements GameService {
 
     private final ScoreRepository scoreRepository;
@@ -49,8 +51,8 @@ public class GameServiceImpl implements GameService {
      * Checks total score and the different scorecards obtained
      * to give new badges in case their conditions are met.
      *
-     * @param solvedChallenge solved challenge
-     * @return list of awarded badges
+     * @param solvedChallenge solved challenge.
+     * @return list of awarded badges.
      */
     private List<BadgeCard> processForBadges(final ChallengeSolvedEvent solvedChallenge) {
         String userId = solvedChallenge.getUserId();
@@ -83,7 +85,7 @@ public class GameServiceImpl implements GameService {
     }
 
     /**
-     * @return total score for a given user, or empty {@code Optional} if user doesn't exist
+     * @return total score for a given user, or empty {@code Optional} if user doesn't exist.
      */
     private Optional<Integer> sumTotalScoreForUser(final String userId) {
         AggregationResults<UserTotalScore> aggregationResult = scoreRepository.sumTotalScoreForUser(userId);

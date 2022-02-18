@@ -1,6 +1,7 @@
-package learn.microservices.gamification.game.service;
+package learn.microservices.gamification.game.controller;
 
 import learn.microservices.gamification.game.dto.ChallengeSolvedEvent;
+import learn.microservices.gamification.game.service.GameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

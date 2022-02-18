@@ -19,7 +19,7 @@ import java.time.Duration;
 @Configuration
 public class AmqpConfiguration {
 
-    // configure exchange (to create if not done yet by the publisher)
+    // Configure exchange (to create if not done yet by the publisher).
     @Bean
     public TopicExchange challengesTopicExchange(@Value("${amqp.exchange.attempts}") final String exchangeName) {
         return ExchangeBuilder
@@ -28,20 +28,20 @@ public class AmqpConfiguration {
                 .build();
     }
 
-    // configure queue
+    // Configure queue.
     @Bean
     public Queue gamificationQueue(@Value("${amqp.queue.gamification}") final String queueName) {
         return QueueBuilder
-                // don't remove queue on broker shutdown
+                // Don't remove queue on broker shutdown.
                 .durable(queueName)
-                // remove messages from a queue after 15 minutes
+                // Remove messages from a queue after 15 minutes.
                 .ttl((int) Duration.ofMinutes(15).toMillis())
-                // maximum 5 messages in a queue at one time
+                // Maximum 5 messages in a queue at one time.
                 .maxLength(5)
                 .build();
     }
 
-    // configure binding key
+    // Configure binding key.
     @Bean
     public Binding correctAttemptsBinding(final Queue gamificationQueue,
                                           final TopicExchange attemptsExchange) {
@@ -51,7 +51,7 @@ public class AmqpConfiguration {
                 .with("attempt.correct");
     }
 
-    // configure message deserialization from JSON to Java classes
+    // Configure message deserialization from JSON to Java classes.
     @Bean
     public MessageHandlerMethodFactory messageHandlerMethodFactory() {
         DefaultMessageHandlerMethodFactory factory = new DefaultMessageHandlerMethodFactory();
@@ -61,7 +61,7 @@ public class AmqpConfiguration {
         return factory;
     }
 
-    // configure listener
+    // Configure listener.
     @Bean
     public RabbitListenerConfigurer rabbitListenerConfigurer(final MessageHandlerMethodFactory messageHandlerMethodFactory) {
         return (c) -> c.setMessageHandlerMethodFactory(messageHandlerMethodFactory);

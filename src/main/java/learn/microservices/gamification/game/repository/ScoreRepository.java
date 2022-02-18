@@ -14,7 +14,7 @@ public interface ScoreRepository extends MongoRepository<ScoreCard, String> {
 
     /**
      * @return the total score for a given user (the sum of the scores of all their ScoreCards),
-     * empty if user doesn't exist
+     * empty if user doesn't exist.
      */
     @Aggregation(pipeline = {"{$match: {userId: '?0'}}", "{$group: {_id: '$userId', totalScore: {$sum: '$score'}}}"})
     AggregationResults<UserTotalScore> sumTotalScoreForUser(String userId);
@@ -23,7 +23,7 @@ public interface ScoreRepository extends MongoRepository<ScoreCard, String> {
      * Retrieves a list of {@link LeaderBoardRow}s representing the Leader Board
      * of users and their total score.
      *
-     * @return the leader board, sorted by highest score first
+     * @return the leader board, sorted by highest score first.
      */
     @Aggregation(pipeline = {"{$group: {_id: '$userId', totalScore: {$sum: '$score'}}}", "{$sort: {totalScore : -1}}"})
     AggregationResults<LeaderBoardRow> findFirst10();
