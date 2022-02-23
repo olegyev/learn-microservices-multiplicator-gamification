@@ -10,6 +10,7 @@ import learn.microservices.gamification.game.repository.ScoreRepository;
 import learn.microservices.gamification.game.repository.ScoreRepository.UserTotalScore;
 import learn.microservices.gamification.game.service.GameService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional // both scorecards and badges are stored or none of them if something goes wrong
+@Slf4j
 public class GameServiceImpl implements GameService {
 
     private final ScoreRepository scoreRepository;
@@ -35,6 +37,7 @@ public class GameServiceImpl implements GameService {
     public GameResult newAttemptForUser(final ChallengeSolvedEvent challenge) {
         // Scores are given only for the correct attempts.
         if (challenge.isCorrect()) {
+            log.info("Processing correct attempt: {}", challenge);
             ScoreCard scoreCard = new ScoreCard(challenge.getUserId(), challenge.getAttemptId());
             scoreRepository.save(scoreCard);
             List<BadgeCard> badgeCards = processForBadges(challenge);
