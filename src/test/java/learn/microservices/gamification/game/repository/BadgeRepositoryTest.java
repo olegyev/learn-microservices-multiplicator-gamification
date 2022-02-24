@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.BDDAssertions.then;
 
 @SpringBootTest
+@TestPropertySource("classpath:application-test.properties")
 class BadgeRepositoryTest {
 
     @Autowired
@@ -23,10 +25,6 @@ class BadgeRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        // Using predefined userId in form of integer in the tests is justified,
-        // because normally they are MongoDB's ObjectId, so that there will be no coincidences
-        // between test and actual documents.
-
         userBadgeCards.add(new BadgeCard(null, "1", System.currentTimeMillis(), BadgeType.FIRST_WON));
         userBadgeCards.add(new BadgeCard(null, "1", System.currentTimeMillis() + 10, BadgeType.BRONZE));
         userBadgeCards.add(new BadgeCard(null, "1", System.currentTimeMillis() + 20, BadgeType.SILVER));
