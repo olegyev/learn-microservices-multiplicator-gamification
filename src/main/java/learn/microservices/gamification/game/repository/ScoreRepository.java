@@ -25,7 +25,11 @@ public interface ScoreRepository extends MongoRepository<ScoreCard, String> {
      *
      * @return the leader board, sorted by highest score first.
      */
-    @Aggregation(pipeline = {"{$group: {_id: '$userId', totalScore: {$sum: '$score'}}}", "{$sort: {totalScore : -1}}"})
+    @Aggregation(pipeline = {
+            "{$group: {_id: '$userId', totalScore: {$sum: '$score'}}}",
+            "{$sort: {totalScore : -1}}",
+            "{$limit: 10}"
+    })
     AggregationResults<LeaderBoardRow> findFirst10();
 
     List<ScoreCard> findByUserIdOrderByTimestampDesc(String userId);
