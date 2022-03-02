@@ -66,6 +66,7 @@
 			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
 			<exclusions>
 				<exclusion>
+					<!-- Spring Cloud Load Balancer is used -->
 					<groupId>org.springframework.cloud</groupId>
 					<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
 				</exclusion>
