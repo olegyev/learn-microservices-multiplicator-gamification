@@ -61,6 +61,14 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+		<!-- The app will try to connect to Consul during the bootstrap phase
+		 	 and fetch the profile properties from the Consul KV store
+		 	 (meta-configurations for Consul see bootstrap.properties) -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-consul-config</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
