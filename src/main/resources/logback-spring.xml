@@ -1,0 +1,51 @@
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <!--
+    defines the host where RabbitMQ is running;
+    referenced to the spring property because can be different per environment
+    -->
+    <springProperty scope="context" name="rabbitMQHost" source="spring.rabbitmq.host"/>
+
+    <appender name="AMQP" class="org.springframework.amqp.rabbit.logback.AmqpAppender">
+        <layout>
+            <!--
+            [%t] - thread name;
+            %logger{36} - logger class
+            -->
+            <pattern>%d{HH:mm:ss.SSS} [%t] %logger{36} - %msg</pattern>
+        </layout>
+
+        <applicationId>gamification</applicationId>
+        <!-- use springProperty if set or localhost by default if not (defaults has prefix -) -->
+        <host>${rabbitMQHost:-localhost}</host>
+        <!--
+        routing key per message for more flexibility while filtering messages;
+        %p - level
+        -->
+        <routingKeyPattern>%property{applicationId}.%p</routingKeyPattern>
+        <!-- RabbitMQ exchange name for log messages -->
+        <exchangeName>logs.topic</exchangeName>
+        <!-- create exchange if absent -->
+        <declareExchange>true</declareExchange>
+        <!-- don't remove exchange on broker shutdown -->
+        <durable>true</durable>
+        <!-- log messages are stored until they consumed by the aggregator -->
+        <deliveryMode>PERSISTENT</deliveryMode>
+        <!-- each log message will have a unique identifier -->
+        <generateId>true</generateId>
+        <charset>UTF-8</charset>
+    </appender>
+
+    <!-- logs will be output to the:
+    console;
+    RabbitMQ exchange logs.topic as messages
+    -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="AMQP"/>
+    </root>
+
+</configuration>
