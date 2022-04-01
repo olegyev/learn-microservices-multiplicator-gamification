@@ -1,4 +1,4 @@
-package learn.microservices.gamification.game.controller;
+package learn.microservices.gamification.game.consumer;
 
 import learn.microservices.gamification.game.dto.ChallengeSolvedEvent;
 import learn.microservices.gamification.game.service.GameService;
@@ -8,6 +8,9 @@ import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
+/**
+ * Consumes messages from the RabbitMQ queue.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j

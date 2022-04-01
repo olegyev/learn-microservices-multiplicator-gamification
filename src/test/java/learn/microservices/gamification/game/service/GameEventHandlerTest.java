@@ -1,6 +1,6 @@
 package learn.microservices.gamification.game.service;
 
-import learn.microservices.gamification.game.controller.GameEventHandler;
+import learn.microservices.gamification.game.consumer.GameEventHandler;
 import learn.microservices.gamification.game.dto.ChallengeSolvedEvent;
 import learn.microservices.gamification.game.enumeration.BadgeType;
 import org.junit.jupiter.api.BeforeEach;
